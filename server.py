@@ -15,23 +15,22 @@ def sent_analyzer():
         function. The output returned shows the label and its confidence 
         score for the provided text.
     '''
-    # TODO
     text_to_analyze = request.args.get("textToAnalyze")
     response = sentiment_analyzer(text_to_analyze)
-    if response['label'] is None:
+    label = response['label']
+    score = response['score']
+    if label is None:
         return "Invalid input! Try again."
-    else:
-        return f"The given text has been identified as {response['label']} with a score of {response['score']}"
+
+    return f"The given text has been identified as {label} with a score of {score}"
 
 @app.route("/")
 def render_index_page():
     ''' This function initiates the rendering of the main application
         page over the Flask channel
     '''
-   
     return render_template('index.html')
 
 if __name__ == "__main__":
-    ''' This functions executes the flask app and deploys it on localhost:5000
-    '''
+
     app.run(host="0.0.0.0", port=5000)
